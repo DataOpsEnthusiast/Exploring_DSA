@@ -1,0 +1,230 @@
+#include <iostream>
+#include "DNodeClass.h"
+using namespace std;
+
+class Dlinkedlist
+{
+private:
+	DNode *head; 	DNode *tail; 
+public:
+	Dlinkedlist()
+	{
+		head = 0;
+		tail = 0;
+	}
+	
+	void addToHead(double element);
+	void addToTail(double element);
+	void addAfter(double existing, double element);
+	void addBefore(double existing, double element);
+	void deletefromHead();
+	void deletefromTail();
+	void deleteSpecific(double element); 
+	void traverselist();
+
+
+};
+void Dlinkedlist::addToHead(double element) 
+{
+	DNode *newNode = new DNode(element); 
+	if (head == 0 && tail == 0)			 
+	{
+		head = tail = newNode; 
+	}
+	else
+	{
+		newNode->next = head; 
+		head = newNode;		  
+	}
+}
+void Dlinkedlist::addToTail(double element) 
+{
+	DNode *newNode = new DNode(element);
+	if (head == 0 && tail == 0)
+	{
+		tail = newNode;
+	}
+	else
+	{
+		tail->next = newNode; 
+		tail = newNode;
+	}
+}
+void Dlinkedlist::addAfter(double existing, double element) 
+{
+	if (tail->data == existing) 
+	{
+		addToTail(element);
+	}
+	else
+	{
+		DNode *current = head;							
+		while (current != 0 && current->data != existing) 
+		{
+			current = current->next; 
+		}
+		if (current == 0) 
+		{
+			cout << "Existing not present in the list";
+		}
+		else
+		{
+			DNode *newNode = new DNode(element);
+			newNode->next = current->next; 
+			current->next = newNode;
+		}
+	}
+}
+void Dlinkedlist::addBefore(double existing, double element) 
+{
+	if (head->data == existing)
+	{
+		addToHead(element);
+	}
+	else
+	{
+		DNode *current = head;
+		while (current != 0 && current->data != existing)
+		{
+			current = current->next;
+		}
+		if (current == 0)
+		{
+			cout << "Existing not present in the list";
+		}
+		else
+		{
+			DNode *newNode = new DNode(element);
+			newNode->next = current->next;
+			current->next = newNode;
+		}
+	}
+}
+void Dlinkedlist::deletefromHead() 
+{
+	if (head == 0 && tail == 0)
+	{
+		cout << "List is empty";
+	}
+	else
+	{
+		DNode *current = head;
+		head = current->next; 
+		delete current;		  
+	}
+}
+void Dlinkedlist::deletefromTail() 
+{
+	if (head == 0 && tail == 0)
+	{
+		cout << "List is empty." << endl;
+	}
+	else
+	{
+		DNode *current = tail;
+		current->next = tail;
+		delete current;
+	}
+}
+
+void Dlinkedlist::traverselist() 
+{
+	if (head == 0 && tail == 0)
+	{
+		cout << "List is empty." << endl;
+	}
+	else
+	{int num=0;
+		DNode *currentNode = head;
+		while (currentNode != 0)
+		{
+			cout << currentNode->data << "\t";
+			currentNode = currentNode->next; 
+			num++; 
+		}
+	}
+}
+
+int main()
+{
+	cout << "**Doubly Linked List**" << endl;
+	Dlinkedlist list;
+	int choice;
+	do
+	{
+		cout << "\n\t.....Menu......" << endl;
+		cout << "\nPress 1: Add to Head" << endl;
+		cout << "Press 2: Add to Tail" << endl;
+		cout << "Press 3: Add After" << endl;
+		cout << "Press 4: Add Before" << endl;
+		cout << "Press 5: Delete from Head" << endl;
+		cout << "Press 6: Delete from Tail" << endl;
+		cout << "Press 7: Traverse the List" << endl;
+		cout << "Press 8: Exit" << endl;
+		cout << "\nEnter choice of user: ";
+		cin >> choice;
+		if (choice == 1)
+		{
+			int Element;
+			cout << "Enter element = ";
+			cin >> Element;
+			list.addToHead(Element);
+		}
+		else if (choice == 2)
+		{
+			int element;
+			cout << "Enter element = ";
+			cin >> element;
+			list.addToTail(element);
+		}
+		else if (choice == 3)
+		{
+
+			int Element;
+			cout << "Enter element = ";
+			cin >> Element;
+			int Existing;
+			cout << "Enter existing to add value after existing. = " << endl;
+			cin >> Existing;
+			list.addAfter(Existing, Element);
+		}
+
+		else if (choice == 4)
+		{
+
+			int Element;
+			cout << "Enter element = ";
+			cin >> Element;
+			int Existing;
+			cout << "Enter existing to add value after existing. = " << endl;
+			cin >> Existing;
+			list.addBefore(Existing, Element);
+		}
+		else if (choice == 7)
+		{
+			list.traverselist();
+		}
+		
+		else if (choice == 5)
+		{
+			list.deletefromHead();
+		}
+		else if (choice == 6)
+
+		{
+			list.deletefromTail();
+		}
+
+		else if (choice == 8)
+
+		{
+			cout<<"Thank You for Using The Program"<<endl;
+		}
+
+		else if (choice == 9)
+		{
+			cout << "Invalid choice. Enter again" << endl;
+		}
+	} while (choice != 8);
+	return 0;
+}

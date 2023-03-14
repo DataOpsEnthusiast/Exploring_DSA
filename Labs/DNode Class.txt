@@ -1,0 +1,14 @@
+
+class DNode
+{
+	public:       
+		double data;   
+		DNode*next; 
+	
+		DNode(double d=0, DNode*n=0) 
+		{
+			data=d;
+			next=n;
+			
+		}
+};
